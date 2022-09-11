@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg navbar-light navegacion">
+  <a class="navbar-brand" href="#" routerLink=""><p-image src="assets/logo-ISD.png" alt="Image" width="150" height="70"></p-image></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="color: #ffff;">
+          Dashboard
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#" routerLink="/dashboard">Cuentas bloqueadas</a>
+          <a class="dropdown-item" href="#" routerLink="/dashboard">Cuentas bots general</a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="#" style="color: #ffff;" routerLink="/usuarios">Usuarios</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="color: #ffff;">
+          Cuentas bots
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#" routerLink="/cuentas/registro">Registro de cuentas</a>
+          <a class="dropdown-item" href="#" routerLink="/cuentas/mantenimiento">Mantenimiento de cuentas</a>
+          <a class="dropdown-item" href="#" routerLink="/cuentas/bloqueo">Bloqueo y suspencion de cuentas</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" style="color: #ffff;">
+          Bloques
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="#" routerLink="/bloques">Manetenedor de bloques</a>
+        </div>
+      </li>
+
+    </ul>
+    <div class="p-fluid grid" >
+      <form class="form-inline">
+        <ng-template [ngIf] = "isLogged">
+          <div class="field col-7 md:col-7 mt-3">
+            <p>{{usuarioLogeado}}</p>
+          </div>
+          <div class="field col-2 md:col-2">
+            <button pButton pRipple type="button" icon="pi pi-power-off" class="p-button-rounded p-button-danger"></button>
+          </div>
+        </ng-template>
+        <ng-template [ngIf] = "!isLogged">
+          <div class="field col-3 md:col-3">
+            <button pButton pRipple type="button" icon="pi pi-user" class="p-button-rounded p-button-warning" (click)="displayLogin = true"></button>
+          </div>
+        </ng-template>        
+      </form>
+    </div>
+  </div>
+</nav>
+
+<p-sidebar [(visible)]="displayLogin" position="right">
+  <div class="p-fluid grid">
+    <div class="field col-12 md:col-12">
+      <h5>Ingresa tus credenciales</h5>
+    </div>
+    <div class="field col-12 md:col-12">
+      <span class="p-float-label">
+          <input type="text" id="userNameTxt" pInputText> 
+          <label for="userNameTxt">Correo de usuario</label>
+      </span>
+    </div>
+    <div class="field col-12 md:col-12">
+      <span class="p-float-label">
+          <input type="password" id="passwordtext" pInputText> 
+          <label for="passwordtext">Contraseña</label>
+      </span>
+    </div>
+    <div class="field col-12 md:col-12">
+      <button class="mr-sm-2 p-button-warning" pButton type="button" icon="pi pi-key" iconPos="left" label="Acceder"></button>
+    </div>
+  </div>
+  <p-toast position="top-center" key="myKey1"></p-toast>
+</p-sidebar>
