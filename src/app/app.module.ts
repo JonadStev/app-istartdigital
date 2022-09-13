@@ -27,6 +27,7 @@ import { MessageService } from 'primeng/api';
 import { PasswordModule } from 'primeng/password';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { interceptorProvider } from './interceptors/prod-interceptor.service';
 import { HomeComponent } from './componentes/home/home.component';
 import { DashboardComponent } from './componentes/dashboard/dashboard.component';
 import { MenuComponent } from './componentes/menu/menu.component';
@@ -78,7 +79,7 @@ import { BloquesComponent } from './componentes/bloques/bloques.component';
     InputTextareaModule,
     PasswordModule
   ],
-  providers: [MessageService],
+  providers: [interceptorProvider, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
