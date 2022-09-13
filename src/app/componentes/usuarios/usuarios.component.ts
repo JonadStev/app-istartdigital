@@ -27,7 +27,7 @@ const ELEMENT_DATA: UsuariosDto[] = [
 export class UsuariosComponent implements OnInit {
 
   estados: any[] = [{ id: 1, nombreEstado: 'ACTIVO' }, { id: 2, nombreEstado: 'INACTIVO' }];
-  roles: any[] = [{ id: 1, nombre: "supervisor" }, { id: 2, nombre: "mantenimiento" }, { id: 2, nombre: "produccion" }];
+  roles: any[] = [{ id: 1, nombre: "supervisor" }, { id: 2, nombre: "mantenimiento" }, { id: 2, nombre: "baneo" }];
 
   selectedRol?: string;
   selectedEstadoUsuario?: string;

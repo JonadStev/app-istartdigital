@@ -4,22 +4,28 @@
         <div class="col-12">
             <p-card>
                 <ng-template pTemplate="header">
-                    <div class="pt-4 ml-4" style="text-align: center;">
+                    <div class="pt-4 card-header">
                         <h3>MANTENEDOR DE BLOQUES</h3>
-                        <hr>
                     </div>
                 </ng-template>
 
                 <div class="row">
                     <div class="col-12">
+
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-4 col-form-label">Nombre del bloque :</label>
+                            <label for="txtNombre" class="col-sm-3 col-form-label">Nombre del bloque :</label>
                             <div class="col-sm-8">
-                                <input style="width: 75%;" type="text" id="txtNombre" pInputText placeholder="BLOQUE_1"> 
+                                <div class="p-inputgroup" style="width: 75%;">
+                                    <span class="p-inputgroup-addon">
+                                        <i class="pi pi-align-justify"></i>
+                                    </span>
+                                    <input type="text" id="txtNombre" pInputText > 
+                                </div>
                             </div>
                         </div>
+
                         <div class="form-group row">
-                            <label for="txtRol" class="col-sm-4 col-form-label">Estado del bloque:</label>
+                            <label for="txtRol" class="col-sm-3 col-form-label">Estado del bloque:</label>
                             <div class="col-sm-8">
                                 <p-dropdown [options]="estados" [(ngModel)]="selectedEstado" optionLabel="nombreEstado" optionValue="nombre" placeholder="Seleccione el estado"></p-dropdown>
                             </div>

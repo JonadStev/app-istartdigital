@@ -24,6 +24,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ChartModule } from 'primeng/chart';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MessageService } from 'primeng/api';
+import { PasswordModule } from 'primeng/password';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './componentes/home/home.component';
@@ -74,7 +75,8 @@ import { BloquesComponent } from './componentes/bloques/bloques.component';
     MessageModule,
     CalendarModule,
     ChartModule,
-    InputTextareaModule
+    InputTextareaModule,
+    PasswordModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
