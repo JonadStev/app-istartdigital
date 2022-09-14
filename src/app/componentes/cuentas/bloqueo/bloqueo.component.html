@@ -22,7 +22,7 @@
                         <div class="form-group row">
                             <label for="txtEstado" class="col-sm-3 col-form-label">Cuentas:</label>
                             <div class="col-sm-8">
-                                <p-dropdown [options]="cuentas || []" [(ngModel)]="selectedCuenta" optionLabel="correo" optionValue="id" [filter]="true" filterBy="correo" [showClear]="true" placeholder="Seleccione la cuenta"></p-dropdown>
+                                <p-dropdown [options]="cuentas || []" [(ngModel)]="selectedCuenta" optionLabel="correo" optionValue="id" [filter]="true" filterBy="correo" [showClear]="false" placeholder="Seleccione la cuenta" (onChange)="seleccionarCuenta()"></p-dropdown>
                             </div>
                         </div>
 
@@ -33,31 +33,31 @@
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-user"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtNombre" pInputText [(ngModel)] = "cuenta!.correo" [disabled]="true"> 
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Estado de cuenta R1 :</label>
+                            <label for="txtEstado" class="col-sm-3 col-form-label">Estado de cuenta R1 :</label>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup" style="width: 75%;">
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-user"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtEstado" pInputText [(ngModel)] = "cuenta!.estado" [disabled]="true">  
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Fecha de la primera revisión :</label>
+                            <label for="txtFecha" class="col-sm-3 col-form-label">Fecha de la primera revisión :</label>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup" style="width: 75%;">
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-calendar"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtFecha" pInputText [(ngModel)] = "cuenta!.fecha" [disabled]="true"> 
                                 </div>
                             </div>
                         </div>
@@ -65,12 +65,7 @@
                         <div class="form-group row">
                             <label for="txtNombre" class="col-sm-3 col-form-label">Estado de cuenta R2 :</label>
                             <div class="col-sm-8">
-                                <div class="p-inputgroup" style="width: 75%;">
-                                    <span class="p-inputgroup-addon">
-                                        <i class="pi pi-user"></i>
-                                    </span>
-                                    <input type="text" id="txtNombre" pInputText > 
-                                </div>
+                                <p-dropdown [options]="estados" [(ngModel)]="selectedEstadoCuenta" optionLabel="nombreEstado" optionValue="nombreEstado" placeholder="Seleccione el estado"></p-dropdown>
                             </div>
                         </div>
 
@@ -81,7 +76,7 @@
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-calendar"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <p-calendar inputId="basic" [(ngModel)]="fecha"></p-calendar>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +88,7 @@
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-align-justify"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtNombre" pInputText [(ngModel)] = "motivoBloqueo"> 
                                 </div>
                             </div>
                         </div>
@@ -105,17 +100,17 @@
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-angle-double-up"></i>
                                     </span>
-                                    <input type="number" id="txtNombre" pInputText > 
+                                    <input type="number" id="txtNombre" pInputText [(ngModel)] = "diasBloqueo"> 
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-sm-4">
-                                <button class="mr-sm-2 p-button-warning" pButton type="button" iconPos="left" label="Bloquear cuenta"></button>
+                            <div class="col-sm-3">
+                                <button class="mr-sm-2 p-button-warning" pButton type="button" iconPos="left" label="Bloquear cuenta" (click)="bloquearCuenta()"></button>
                             </div>
-                            <div class="col-sm-4">
-                                <button class="mr-sm-2 p-button-danger" pButton type="button" iconPos="left" label="Eliminar registro de bloqueo"></button>
+                            <div class="col-sm-3">
+                                <button class="mr-sm-2 p-button-danger" pButton type="button" iconPos="left" label="Eliminar registro de bloqueo" (click)="eliminarBloqueo()"></button>
                             </div>
                         </div>
 
@@ -124,7 +119,7 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <h4>Mantenimientos realizados</h4>
+                        <h4>Lista de bloqueos realizados</h4>
                     </div>
                 </div>
 
@@ -145,6 +140,8 @@
                                         <th>Fecha segunda revision</th>
                                         <th>Motivo</th>
                                         <th>Número de días bloqueados</th>
+                                        <th>Bloque</th>
+                                        <th>Cuenta</th>
                                     </tr>
                                     <!-- 
                                     <tr>
@@ -164,12 +161,14 @@
                                     <tr [pSelectableRow]="bloqueo">
                                         <td>{{bloqueo.id}}</td>
                                         <td>{{bloqueo.usuario}}</td>
-                                        <td>{{bloqueo.esatadoR1}}</td>
+                                        <td>{{bloqueo.estadoR1}}</td>
                                         <td>{{bloqueo.fechaPrimeraRevision}}</td>
-                                        <td>{{bloqueo.esatadoR2}}</td>
+                                        <td>{{bloqueo.estadoR2}}</td>
                                         <td>{{bloqueo.fechaSegundaRevision}}</td>
                                         <td>{{bloqueo.motivo}}</td>
                                         <td>{{bloqueo.dias}}</td>
+                                        <td>{{bloqueo.bloque}}</td>
+                                        <td>{{bloqueo.cuenta}}</td>
                                     </tr>
                                 </ng-template>
                             </p-table>
@@ -181,3 +180,4 @@
         </div>
     </div>
 </div>
+<p-toast position="top-center" key="myKey1"></p-toast>

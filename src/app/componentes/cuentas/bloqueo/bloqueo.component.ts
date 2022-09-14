@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { BloqueDto } from 'src/app/modelos/bloque';
+import { BloqueoDto } from 'src/app/modelos/bloqueos';
 import { CuentaDto } from 'src/app/modelos/cuenta';
+import { BloqueoService } from 'src/app/services/bloqueo.service';
 import { BloquesService } from 'src/app/services/bloques.service';
 
 @Component({
@@ -10,25 +13,32 @@ import { BloquesService } from 'src/app/services/bloques.service';
 })
 export class BloqueoComponent implements OnInit {
 
-  selectedBloque?: string;
+  selectedBloque?: number;
   selectedCuenta?: string;
 
-  bloqueos: any[] = [
-    { id: 1, usuario: 'jose.macias@gmail.com', esatadoR1: 'ACTIVO', fechaPrimeraRevision: '13/09/2022', esatadoR2: 'BLOQUEADA', fechaSegundaRevision: '13/09/2022', motivo: 'Falta de pago', dias: 2 },
-    { id: 1, usuario: 'carlos.perez@gmail.com', esatadoR1: 'ACTIVO', fechaPrimeraRevision: '13/09/2022', esatadoR2: 'BLOQUEADA', fechaSegundaRevision: '13/09/2022', motivo: 'Falta de pago', dias: 7 },
-    { id: 1, usuario: 'jose.sanchez@gmail.com', esatadoR1: 'ACTIVO', fechaPrimeraRevision: '13/09/2022', esatadoR2: 'BLOQUEADA', fechaSegundaRevision: '13/09/2022', motivo: 'Falta de pago', dias: 4 },
-    { id: 1, usuario: 'carlos.calle@gmail.com', esatadoR1: 'ACTIVO', fechaPrimeraRevision: '13/09/2022', esatadoR2: 'BLOQUEADA', fechaSegundaRevision: '13/09/2022', motivo: 'Falta de pago', dias: 8 },
-  ];
+  bloqueos: BloqueoDto[] = [];
+  bloqueo: BloqueoDto = {};
 
   bloques: BloqueDto[] = [];
-  cuentas?: CuentaDto[] = [];
-
   bloque: BloqueDto = {};
 
-  constructor(private bloqueService: BloquesService) { }
+  cuentas?: CuentaDto[] = [];
+  cuenta?: CuentaDto = {};
+
+  estados: any[] = [{ id: 1, nombreEstado: 'BLOQUEADA' }];
+  selectedEstadoCuenta?: string
+
+  fecha: Date = new Date;
+  motivoBloqueo: string;
+  diasBloqueo: number;
+
+  idBloqueo: number = 0;
+
+  constructor(private bloqueService: BloquesService, private bloqueoService: BloqueoService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.llenarBloques();
+    this.llenarBloqueos();
   }
 
   llenarBloques() {
@@ -39,17 +49,77 @@ export class BloqueoComponent implements OnInit {
     });
   }
 
+  llenarBloqueos() {
+    this.bloqueoService.getBloqueos().subscribe(data => {
+      this.bloqueos = data;
+    });
+  }
+
   llenarCuentas() {
+    this.limpiar();
     this.bloque = this.bloques.map(x => x).filter(b => b.id === this.selectedBloque).reduce(x => x);
-    this.cuentas = this.bloque.cuentas;
+    this.cuentas = this.bloque.cuentas?.filter(c => c.estado === 'ACTIVO');
+  }
+
+  seleccionarCuenta() {
+    this.cuenta = this.cuentas?.filter(x => x.id === this.selectedCuenta).reduce(x => x);
+  }
+
+  bloquearCuenta() {
+    //Validaciones
+    this.bloqueo.usuario = this.cuenta?.correo;
+    this.bloqueo.estadoR1 = this.cuenta?.estado;
+    this.bloqueo.fechaPrimeraRevision = this.cuenta?.fecha
+    this.bloqueo.estadoR2 = this.selectedEstadoCuenta;
+    this.bloqueo.fechaSegundaRevision = this.fecha.toLocaleDateString();
+    this.bloqueo.motivo = this.motivoBloqueo;
+    this.bloqueo.dias = this.diasBloqueo;
+    this.bloqueo.bloque = this.selectedBloque;
+    this.bloqueo.cuenta = this.cuenta?.id;
+
+    console.log(this.bloqueo);
+
+    this.bloqueoService.guadarBloqueo(this.bloqueo).subscribe(data => {
+      console.log(data);
+      this.messageService.add({ key: 'myKey1', severity: 'info', summary: 'Información', detail: 'La cuenta ha sido bloqueada.' });
+      this.limpiar();
+      this.selectedBloque = 0;
+      this.selectedCuenta = '';
+      this.llenarBloques();
+      this.llenarBloqueos();
+    });
+
+  }
+
+  limpiar() {
+    this.cuenta = {};
+    this.motivoBloqueo = '';
+    this.diasBloqueo = 0;
+    this.selectedEstadoCuenta = '';
+    this.fecha = new Date;
+  }
+
+  eliminarBloqueo() {
+    if (this.idBloqueo === 0) {
+      this.messageService.add({ key: 'myKey1', severity: 'info', summary: 'Información', detail: 'Debe seleccionar un registro del listado de bloqueos.' });
+      return;
+    }
+    this.bloqueoService.deleteBloqueos(this.idBloqueo).subscribe(data => {
+      this.messageService.add({ key: 'myKey1', severity: 'info', summary: 'Información', detail: data.message });
+      this.llenarBloqueos();
+      this.llenarBloques();
+      this.selectedBloque = 0;
+      this.selectedCuenta = '';
+    });
   }
 
   onRowSelectBloqueo(event: any) {
+    this.idBloqueo = event.data.id;
     console.log(event);
   }
 
   onRowUnselectBloqueo(event: any) {
-    console.log(event);
+    this.idBloqueo = 0;
   }
 
 }
