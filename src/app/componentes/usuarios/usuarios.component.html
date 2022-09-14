@@ -61,12 +61,7 @@
                         <div class="form-group row">
                             <label for="txtNombre" class="col-sm-3 col-form-label">Contraseña :</label>
                             <div class="col-sm-8">
-                                <div class="p-inputgroup" style="width: 75%;">
-                                    <span class="p-inputgroup-addon">
-                                        <i class="pi pi-key"></i>
-                                    </span>
-                                    <input type="text" id="txtNombre" pInputText > 
-                                </div>
+                                <p-password [toggleMask]="true" [feedback]="false" [(ngModel)]="selectedRol"></p-password>
                             </div>
                         </div>
 

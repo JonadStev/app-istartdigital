@@ -8,6 +8,11 @@ import { CuentaDto } from 'src/app/modelos/cuenta';
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
+  styles: [`
+        :host ::ng-deep .p-password input {
+            width: 18rem
+        }
+    `],
   styleUrls: ['./registro.component.scss']
 })
 export class RegistroComponent implements OnInit {
@@ -15,9 +20,8 @@ export class RegistroComponent implements OnInit {
   bloques: BloqueDto[] = [];
   selectedBloque?: string = '';
 
-  estados: any[] = [{ id: 1, nombreEstado: 'ACTIVO' }, { id: 2, nombreEstado: 'INACTIVO' }];
-  selectedEstadoUsuario?: string
-
+  estados: any[] = [{ id: 1, nombreEstado: 'ACTIVO' }, { id: 2, nombreEstado: 'INACTIVO' }, { id: 2, nombreEstado: 'BLOQUEADA' }];
+  selectedEstadoCuenta?: string
 
   @ViewChild('myInputFile')
   myInputFile: ElementRef;
@@ -26,6 +30,8 @@ export class RegistroComponent implements OnInit {
   isCarga: boolean = false;
 
   cuentas: CuentaDto[] = [];
+
+  cuenta: CuentaDto = {};
 
   constructor(private bloqueService: BloquesService, private cuentaService: CuentaService, private messageService: MessageService) { }
 
@@ -57,10 +63,19 @@ export class RegistroComponent implements OnInit {
 
   }
 
+  guardarCuenta() {
+    this.messageService.clear();
+    this.cuenta.estado = this.selectedEstadoCuenta;
+    this.cuentaService.guardarCuenta(this.cuenta).subscribe(data => {
+      this.messageService.add({ key: 'myKey1', severity: 'success', summary: 'Éxito', detail: 'Los datos de la cuenta han sido guardados correctamente.' });
+      this.llenarTablaBloque();
+      this.limpiarFormulario();
+    });
+  }
+
   llenarTablaBloque() {
     this.cuentaService.getCuentasByBloque(this.selectedBloque as string).subscribe(data => {
       this.cuentas = data;
-      console.log(this.cuentas);
     });
   }
 
@@ -72,13 +87,19 @@ export class RegistroComponent implements OnInit {
   }
 
   onRowSelectCuenta(event: any) {
-    console.log(event);
+    this.cuenta = event.data;
+    this.selectedEstadoCuenta = event.data.estado;
+    //console.log(event.data);
   }
 
   onRowUnselectCuenta(event: any) {
-    console.log(event);
+    this.limpiarFormulario();
   }
 
+  limpiarFormulario() {
+    this.cuenta = {};
+    this.selectedEstadoCuenta = '';
+  }
 
 
 }

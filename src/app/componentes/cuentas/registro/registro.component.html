@@ -12,85 +12,80 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Correo usuario :</label>
+                            <label for="txtCorreo" class="col-sm-3 col-form-label">Correo usuario :</label>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup" style="width: 75%;">
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-envelope"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtCorreo" pInputText [(ngModel)] = "cuenta.correo"> 
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Contraseña :</label>
+                            <label for="txtPassword" class="col-sm-3 col-form-label">Contraseña :</label>
                             <div class="col-sm-8">
-                                <div class="p-inputgroup" style="width: 75%;">
-                                    <span class="p-inputgroup-addon">
-                                        <i class="pi pi-key"></i>
-                                    </span>
-                                    <input type="text" id="txtNombre" pInputText > 
-                                </div>
+                                <p-password [toggleMask]="true" [feedback]="false" [(ngModel)]="cuenta.password"></p-password>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Teléfono :</label>
+                            <label for="txtTelefono" class="col-sm-3 col-form-label">Teléfono :</label>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup" style="width: 75%;">
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-phone"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtTelefono" pInputText [(ngModel)] = "cuenta.telefono"> 
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Ipchip :</label>
+                            <label for="txtIpChip" class="col-sm-3 col-form-label">Ipchip :</label>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup" style="width: 75%;">
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-book"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtIpChip" pInputText [(ngModel)] = "cuenta.ipChip"> 
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Modelo :</label>
+                            <label for="txtModelo" class="col-sm-3 col-form-label">Modelo :</label>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup" style="width: 75%;">
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-clone"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtModelo" pInputText [(ngModel)] = "cuenta.modelo"> 
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Fecha :</label>
+                            <label for="txtFecha" class="col-sm-3 col-form-label">Fecha :</label>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup" style="width: 75%;">
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-calendar"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtFecha" pInputText [(ngModel)] = "cuenta.fecha"> 
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Reponsable :</label>
+                            <label for="txtResponsable" class="col-sm-3 col-form-label">Reponsable :</label>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup" style="width: 75%;">
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-user"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtResponsable" pInputText [(ngModel)] = "cuenta.responsable"> 
                                 </div>
                             </div>
                         </div>
@@ -98,29 +93,27 @@
                         <div class="form-group row">
                             <label for="txtEstado" class="col-sm-3 col-form-label">Estado:</label>
                             <div class="col-sm-8">
-                                <p-dropdown [options]="estados" [(ngModel)]="selectedEstadoUsuario" optionLabel="nombreEstado" optionValue="nombreEstado" placeholder="Seleccione el estado" [ngModelOptions]="{standalone: true}"></p-dropdown>
+                                <p-dropdown [options]="estados" [(ngModel)]="selectedEstadoCuenta" optionLabel="nombreEstado" optionValue="nombreEstado" placeholder="Seleccione el estado"></p-dropdown>
                             </div>
                         </div> 
 
                         <div class="form-group row">
-                            <label for="txtNombre" class="col-sm-3 col-form-label">Operadora :</label>
+                            <label for="txtOperadora" class="col-sm-3 col-form-label">Operadora :</label>
                             <div class="col-sm-8">
                                 <div class="p-inputgroup" style="width: 75%;">
                                     <span class="p-inputgroup-addon">
                                         <i class="pi pi-phone"></i>
                                     </span>
-                                    <input type="text" id="txtNombre" pInputText > 
+                                    <input type="text" id="txtOperadora" pInputText [(ngModel)] = "cuenta.operadora"> 
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-sm-8">
-                                <button class="mr-sm-2 p-button-warning" pButton type="button" iconPos="left" label="Guardar cuenta"></button>
+                                <button class="mr-sm-2 p-button-warning" pButton type="button" iconPos="left" label="Guardar cuenta" (click)="guardarCuenta()"></button>
                             </div>
                         </div>
-
-                        
 
                     </div>
 

@@ -22,6 +22,11 @@ const ELEMENT_DATA: UsuariosDto[] = [
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
+  styles: [`
+      :host ::ng-deep .p-password input {
+          width: 18rem
+      }
+  `],
   styleUrls: ['./usuarios.component.scss']
 })
 export class UsuariosComponent implements OnInit {

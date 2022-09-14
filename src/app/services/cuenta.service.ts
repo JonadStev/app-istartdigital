@@ -21,4 +21,8 @@ export class CuentaService {
     return this.http.get<CuentaDto[]>(this.cuentaUrl + idbloque)
   }
 
+  public guardarCuenta(cuenta: CuentaDto): Observable<CuentaDto> {
+    return this.http.post<CuentaDto>(this.cuentaUrl + 'save', cuenta);
+  }
+
 }

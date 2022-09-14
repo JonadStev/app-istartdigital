@@ -12,12 +12,14 @@ export class DashboardComponent implements OnInit {
 
   chartOptions: any
 
+  isVisible: boolean = false;
+
   constructor() { }
 
   ngOnInit(): void {
 
     this.data = {
-      labels: ['Bloque 1', 'Bloque 2', 'Bloque 3'],
+      labels: ['BLOQUE 1', 'BLOQUE 2', 'BLOQUE 3'],
       datasets: [
         {
           data: [300, 50, 100],
@@ -36,7 +38,7 @@ export class DashboardComponent implements OnInit {
     };
 
     this.data2 = {
-      labels: ['Bloque 1', 'Bloque 2', 'Bloque 3', 'Bloque 4', 'Bloque 5', 'Bloque 6'],
+      labels: ['BLOQUE 1', 'BLOQUE 2', 'BLOQUE 3', 'BLOQUE 4', 'BLOQUE 5', 'BLOQUE 6'],
       datasets: [
         {
           data: [300, 50, 100, 25, 25, 25],
@@ -67,7 +69,7 @@ export class DashboardComponent implements OnInit {
       plugins: {
         legend: {
           labels: {
-            color: 'black'
+            color: 'black',
           }
         }
       }
