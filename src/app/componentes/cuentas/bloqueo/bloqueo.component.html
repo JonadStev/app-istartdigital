@@ -15,7 +15,14 @@
                         <div class="form-group row">
                             <label for="txtEstado" class="col-sm-3 col-form-label">Bloque:</label>
                             <div class="col-sm-8">
-                                <p-dropdown [options]="bloques" [(ngModel)]="selectedBloque" optionLabel="nombreEstado" optionValue="nombreEstado" placeholder="Seleccione el bloque"></p-dropdown>
+                                <p-dropdown [options]="bloques" [(ngModel)]="selectedBloque" optionLabel="nombre" optionValue="id" placeholder="Seleccione el bloque" (onChange)="llenarCuentas()"></p-dropdown>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="txtEstado" class="col-sm-3 col-form-label">Cuentas:</label>
+                            <div class="col-sm-8">
+                                <p-dropdown [options]="cuentas || []" [(ngModel)]="selectedCuenta" optionLabel="correo" optionValue="id" [filter]="true" filterBy="correo" [showClear]="true" placeholder="Seleccione la cuenta"></p-dropdown>
                             </div>
                         </div>
 
@@ -124,14 +131,14 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
-                            <p-table [value]="bloqueos" [paginator]="true" [rows]="5" selectionMode="single" dataKey="id" 
+                            <p-table #dt1 [value]="bloqueos" [paginator]="true" [rows]="5" selectionMode="single" dataKey="id"
                             (onRowSelect)="onRowSelectBloqueo($event)" (onRowUnselect)="onRowUnselectBloqueo($event)"
                                 [showCurrentPageReport]="true" responsiveLayout="scroll"
                                 currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} bloqueos" [rowsPerPageOptions]="[5,10,15]">
                                 <ng-template pTemplate="header">
                                     <tr>
                                         <th>Id</th>
-                                        <th>Usuario</th>
+                                        <th pSortableColumn="usuario">Usuario <p-sortIcon field="usuario"></p-sortIcon></th>
                                         <th>Estado R1</th>
                                         <th>Fecha primera revision</th>
                                         <th>Estado R2</th>
@@ -139,6 +146,19 @@
                                         <th>Motivo</th>
                                         <th>Número de días bloqueados</th>
                                     </tr>
+                                    <!-- 
+                                    <tr>
+                                        <th>
+                                            <input pInputText #textInput type="text" (input)="dt1.filter(textInput.value, 'id', 'contains')" placeholder="Search by Id" class="p-column-filter" style="height: 12px; width: 120px;">
+                                        </th>
+                                        <th>
+                                            <input pInputText #textInput type="text" (input)="dt1.filter(textInput.value, 'usuario', 'contains')" placeholder="Search by Usuario" class="p-column-filter" style="height: 12px; width: 170px;">
+                                        </th>
+                                        <th>
+                                            <input pInputText #textInput type="text" (input)="dt1.filter(textInput.value, 'esatadoR1', 'contains')" placeholder="Search by EstadoR1" class="p-column-filter" style="height: 12px;">
+                                        </th>
+                                    </tr>
+                                    -->
                                 </ng-template>
                                 <ng-template pTemplate="body" let-bloqueo>
                                     <tr [pSelectableRow]="bloqueo">

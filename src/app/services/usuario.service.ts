@@ -22,4 +22,8 @@ export class UsuarioService {
     return this.http.post<any>(this.authUrl + 'nuevo', usuario);
   }
 
+  public actualiarUsuario(usuario: UsuarioDto): Observable<UsuarioDto> {
+    return this.http.post<UsuarioDto>(this.userUrl + 'save', usuario);
+  }
+
 }

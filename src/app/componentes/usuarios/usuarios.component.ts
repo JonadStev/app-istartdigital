@@ -64,7 +64,22 @@ export class UsuariosComponent implements OnInit {
   }
 
   editarUsuario() {
-    alert('Editando')
+    let roles: any = [];
+    //Validaciones
+    if (this.selectedRol === 'supervisor') {
+      roles.push({ id: 1, rolNombre: 'ROLE_SUPERVISOR' }, { id: 2, rolNombre: 'ROLE_MANTENIMIENTO' }, { id: 3, rolNombre: 'ROLE_PRODUCCION' });
+    } else if (this.selectedRol === 'mantenimiento') {
+      roles.push({ id: 2, rolNombre: 'ROLE_MANTENIMIENTO' });
+    } else {
+      roles.push({ id: 3, rolNombre: 'ROLE_PRODUCCION' });
+    }
+    this.usuario.estado = this.selectedEstadoUsuario;
+    this.usuario.roles = roles;
+    this.usuarioService.actualiarUsuario(this.usuario).subscribe(data => {
+      this.messageService.add({ key: 'myKey1', severity: 'success', summary: 'Éxito', detail: 'Usuario actualizado correctamente' });
+      this.llenarTablaUsuarios();
+      this.limpiar();
+    });
   }
 
   onRowSelectUser(event: any) {
