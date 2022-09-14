@@ -92,7 +92,7 @@ export class TokenService {
       const payloadDecoded = atob(payload);
       const values = JSON.parse(payloadDecoded);
       const roles = values.roles;
-      if (roles.indexOf('ROLE_BLOQUEO') < 0) // No es un rol de bloqueo
+      if (roles.indexOf('ROLE_PRODUCCION') < 0) // No es un rol de bloqueo
         return false;
       return true; // Es es rol de bloqueo
     }

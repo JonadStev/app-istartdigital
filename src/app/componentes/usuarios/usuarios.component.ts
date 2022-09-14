@@ -1,23 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { UsuarioDto } from 'src/app/modelos/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
-
-export interface UsuariosDto {
-  id?: number;
-  nombres?: string;
-  apellidos?: string;
-  correo?: string;
-  contacto?: string;
-  password?: string;
-  estado?: string;
-}
-
-const ELEMENT_DATA: UsuariosDto[] = [
-  { id: 1, nombres: 'Alberto', apellidos: 'Cruz', correo: 'acruz@gmail.com', contacto: '0987656765', password: 'asdfqw', estado: 'ACTIVO' },
-  { id: 2, nombres: 'Jorge', apellidos: 'Zapata', correo: 'jzapata@gmail.com', contacto: '0987656761', password: 'asdfqw', estado: 'ACTIVO' },
-  { id: 3, nombres: 'Susana', apellidos: 'Gallardo', correo: 'sgallardo@gmail.com', contacto: '0987656762', password: 'asdf2w', estado: 'ACTIVO' },
-  { id: 4, nombres: 'Michelle', apellidos: 'Perez', correo: 'mperez@gmail.com', contacto: '0987656763', password: 'fasess', estado: 'ACTIVO' },
-  { id: 5, nombres: 'Steven', apellidos: 'Burgos', correo: 'sburgos@gmail.com', contacto: '0987656764', password: 'asdfas', estado: 'ACTIVO' }
-];
 
 @Component({
   selector: 'app-usuarios',
@@ -32,25 +17,81 @@ const ELEMENT_DATA: UsuariosDto[] = [
 export class UsuariosComponent implements OnInit {
 
   estados: any[] = [{ id: 1, nombreEstado: 'ACTIVO' }, { id: 2, nombreEstado: 'INACTIVO' }];
-  roles: any[] = [{ id: 1, nombre: "supervisor" }, { id: 2, nombre: "mantenimiento" }, { id: 2, nombre: "baneo" }];
+  roles: any[] = [{ id: 1, nombre: "supervisor" }, { id: 2, nombre: "mantenimiento" }, { id: 2, nombre: "produccion" }];
 
   selectedRol?: string;
   selectedEstadoUsuario?: string;
 
-  usuarios: any[] = ELEMENT_DATA;
+  usuarios: UsuarioDto[] = [];
 
-  constructor() { }
+  usuario: UsuarioDto = {};
+
+  isEditUser: boolean = false;
+
+  constructor(private usuarioService: UsuarioService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
+    this.llenarTablaUsuarios();
   }
 
+  llenarTablaUsuarios() {
+    this.usuarioService.getUsuarios().subscribe(data => {
+      this.usuarios = data;
+    });
+  }
+
+  guardarUsuario() {
+    this.messageService.clear();
+    if (this.isEditUser) {
+      this.editarUsuario();
+      return;
+    }
+    this.usuario.estado = this.selectedEstadoUsuario;
+    this.usuario.roles = [this.selectedRol as string];
+    // validaciones
+    this.usuarioService.guardarUsuario(this.usuario).subscribe(data => {
+      console.log(data);
+      if (data.message === 'El correo electrónico ya existe.')
+        this.messageService.add({ key: 'myKey1', severity: 'error', summary: 'Información', detail: data.message });
+      else {
+        this.messageService.add({ key: 'myKey1', severity: 'success', summary: 'Éxito', detail: 'Usuario guardado correctamente' });
+        this.limpiar();
+        this.llenarTablaUsuarios();
+      }
+
+    });
+  }
+
+  editarUsuario() {
+    alert('Editando')
+  }
 
   onRowSelectUser(event: any) {
-    console.log(event);
+    this.usuario = event.data;
+    this.selectedEstadoUsuario = event.data.estado;
+    if (this.usuario.roles?.length === 3) {
+      this.selectedRol = 'supervisor';
+    } else {
+      for (const d of (this.usuario.roles as any)) {
+        if (d.rolNombre === 'ROLE_MANTENIMIENTO')
+          this.selectedRol = 'mantenimiento';
+        else
+          this.selectedRol = 'produccion';
+      }
+    }
+    this.isEditUser = true;
   }
 
   onRowUnselectUser(event: any) {
-    console.log(event);
+    this.limpiar();
+  }
+
+  limpiar() {
+    this.usuario = {};
+    this.isEditUser = false;
+    this.selectedEstadoUsuario = '';
+    this.selectedRol = '';
   }
 
 }

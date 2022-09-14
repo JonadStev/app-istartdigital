@@ -41,7 +41,9 @@ export class RegistroComponent implements OnInit {
 
   llenarBloques() {
     this.bloqueService.getBloques().subscribe(data => {
-      this.bloques = data;
+      this.bloques = data.filter(x => {
+        return x.estado === 'ACTIVO';
+      });
     });
   }
 

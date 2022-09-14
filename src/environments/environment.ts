@@ -8,6 +8,7 @@ export const environment = {
   cuentaUrl: 'http://localhost:8080/cuenta/',
   bloqueUrl: 'http://localhost:8080/bloque/',
   dashboardUrl: 'http://localhost:8080/dashboard/',
+  userUrl: 'http://localhost:8080/usuario/',
 };
 
 /*

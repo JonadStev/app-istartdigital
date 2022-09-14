@@ -20,10 +20,10 @@ export class ProdGuardService implements CanActivate {
 
     if (this.tokenService.isAdmin()) {
       this.realRol = 'supervisor';
-    } else if (this.tokenService.isPerfilBloqueo()) {
-      this.realRol = 'bloqueo';
-    } else {
+    } else if (this.tokenService.isPerfilMantenimiento()) {
       this.realRol = 'mantenimiento';
+    } else {
+      this.realRol = 'produccion';
     }
 
     if (!this.tokenService.isLogger() || expectedRol.indexOf(this.realRol) < 0) {

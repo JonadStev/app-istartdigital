@@ -17,4 +17,8 @@ export class BloquesService {
     return this.http.get<BloqueDto[]>(this.bloqueURL + 'all');
   }
 
+  public guardarBloque(bloque: BloqueDto): Observable<BloqueDto> {
+    return this.http.post<BloqueDto>(this.bloqueURL + 'save', bloque);
+  }
+
 }
