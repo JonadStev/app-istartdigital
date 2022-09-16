@@ -36,6 +36,9 @@ import { RegistroComponent } from './componentes/cuentas/registro/registro.compo
 import { MantenimientoComponent } from './componentes/cuentas/mantenimiento/mantenimiento.component';
 import { BloqueoComponent } from './componentes/cuentas/bloqueo/bloqueo.component';
 import { BloquesComponent } from './componentes/bloques/bloques.component';
+import { CuentasBaneosComponent } from './dash/cuentas-baneos/cuentas-baneos.component';
+import { CuentasGeneralesComponent } from './dash/cuentas-generales/cuentas-generales.component';
+import { CeuntasBloqueComponent } from './dash/ceuntas-bloque/ceuntas-bloque.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { BloquesComponent } from './componentes/bloques/bloques.component';
     RegistroComponent,
     MantenimientoComponent,
     BloqueoComponent,
-    BloquesComponent
+    BloquesComponent,
+    CuentasBaneosComponent,
+    CuentasGeneralesComponent,
+    CeuntasBloqueComponent
   ],
   imports: [
     BrowserModule,
